@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="CategoriaService"
+    targetNamespace="http://localhost:3000/soap/categorias"
+    xmlns:tns="http://localhost:3000/soap/categorias"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- Mensajes -->
+    <message name="ObtenerCategoriasRequest"/>
+    <message name="ObtenerCategoriasResponse">
+        <part name="respuesta" type="xsd:string"/>
+    </message>
+
+    <!-- Corregido: portType con 'T' mayúscula -->
+    <portType name="CategoriaServicePortType">
+        <operation name="obtenerCategorias">
+            <input message="tns:ObtenerCategoriasRequest"/>
+            <output message="tns:ObtenerCategoriasResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="CategoriaServiceBinding" type="tns:CategoriaServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="obtenerCategorias">
+            <soap:operation soapAction="obtenerCategorias"/>
+            <input>
+                <soap:body use="literal" namespace="http://localhost:3000/soap/categorias"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="http://localhost:3000/soap/categorias"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="CategoriaService">
+        <port name="CategoriaServicePort" binding="tns:CategoriaServiceBinding">
+            <soap:address location="http://localhost:3000/soap/categorias"/>
+        </port>
+    </service>
+</definitions>
